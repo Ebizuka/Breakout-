@@ -10,6 +10,8 @@ import android.view.View;
 
 public class MainActivity extends Activity {
 
+	
+	
 	private View view;
 
 	// ƒnƒ“ƒhƒ‰‚ğì¬

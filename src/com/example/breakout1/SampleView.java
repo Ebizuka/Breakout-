@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.method.Touch;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -22,14 +23,16 @@ public class SampleView extends View {
 	private	int 		dx = -2;   //玉の向きを表す
 	private	int 		dy = -2;   //
 	private static int margin = 20; //玉の半径
-	private int blocrecord = 2; //ブロックの行
+	private int blocrecord = 4; //ブロックの行
 	private int blocfield = 4;//ブロックの列
 	private int map[][] = new int[blocrecord][blocfield]  ;    //ブロックに対する配列
 	private Bitmap item;          //画像 item
 	private int speed = 10;       //玉の速さを設定
 	private float ex = 0;         //タッチされた場所の座標
 	private float ey = 0;         //
-	private int bar = 50;       //バーの幅
+	private int bar = 100;       //バーの幅
+	private boolean start = false; // ゲームを始める時の判定
+	private boolean restart = false; //　リスタート
 
 	public SampleView(Context context) //コンストラクタ
 	{
@@ -42,16 +45,29 @@ public class SampleView extends View {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) //タッチされた時
 	{
+		ex = event.getX();    
+		ey = event.getY();
 		int	action = event.getAction();
-		if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){
+		if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //一回タッチされた時
 
-			ex = event.getX();    
-			ey = event.getY();
+			start = true;
 			
-			
-				
-
+					}
+		if(restart == true){
+			if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //一回タッチされた時
+				start = false;
+				restart = false;
+				ballx = 500;
+				bally = 500;
+				speed = 10;
 			}
+		}
+		
+		
+		
+			
+
+			
 		
 		return true;
 	}
@@ -60,6 +76,16 @@ public class SampleView extends View {
 	public void onDraw(Canvas canvas){   //描画に関する
 		
 		paint.setColor(color); //色を指定？
+		if(start == false){
+			paint.setTextSize(50);
+        	paint.setColor(Color.BLUE);
+			canvas.drawText("はじめてのブロック崩しづくり", getWidth()/10, 200, paint);
+			paint.setColor(0xFF000000);
+			canvas.drawText("画面をタッチすると始まるよ", getWidth()/10, getHeight()-600, paint);
+			
+			
+			
+		}else if(start == true){
 		canvas.drawCircle(ballx, bally, margin, paint);//玉を表示
 		
 		//canvas.drawColor(Color.WHITE);//背景の色を指定
@@ -114,8 +140,8 @@ public class SampleView extends View {
 		canvas.drawRect(ex-bar,getHeight()-200,ex+bar,getHeight()-160, paint);
 
 		//バーに当たった時の処理
-        for(int k = 0; k<=100 ; k++){
-        	if ((ballx - (ex-50+k))*(ballx - (ex-50+k))
+        for(int k = 0; k<=2*bar ; k++){
+        	if ((ballx - (ex-bar+k))*(ballx - (ex-bar+k))
         			+(bally - (getHeight()-200))*(bally - (getHeight()-200)) <= margin*margin)
             	{ dy = -2;}
             }
@@ -137,9 +163,13 @@ public class SampleView extends View {
         	paint.setTextSize(80);
         	paint.setColor(Color.BLUE);
         	canvas.drawText("Game Over",getWidth()/4,getHeight()/4,paint);
+        	paint.setTextSize(50);
+        	canvas.drawText("タッチするとスタート画面に戻る",getWidth()/4,(getHeight()/4)+200,paint);
+        	ballx = -margin;
         	ballx = -margin;
         	bally = +margin + getHeight();
         	speed = 0; 
+        	restart = true;
         	
         }      
         
@@ -147,4 +177,5 @@ public class SampleView extends View {
         ballx = ballx + speed * dx;
         bally = bally + speed * dy;
 	}
+}
 }
