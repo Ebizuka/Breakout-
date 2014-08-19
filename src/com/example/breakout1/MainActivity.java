@@ -14,9 +14,9 @@ public class MainActivity extends Activity {
 	
 	private View view;
 
-	// ƒnƒ“ƒhƒ‰‚ğì¬
+	// ãƒãƒ³ãƒ‰ãƒ©ãƒ¼ã‚’ä½œæˆ
 	private Handler handler = new Handler();
-	// ƒrƒ…[‚ÌÄ•`‰æŠÔŠu(ƒ~ƒŠ•b)
+	// ãƒ“ãƒ¥ãƒ¼ã®æç”»æ„Ÿè¦šï¼ˆãƒŸãƒªç§’ã€€å†æç”»ï¼‰
 	private final static long INTERVAL_TIME = 30;
 
 	@Override
@@ -25,15 +25,15 @@ public class MainActivity extends Activity {
 		view = new SampleView(this);
 		setContentView(view);
 
-		// ƒrƒ…[Ä•`‰æƒ^ƒCƒ}[
-		// ƒ^ƒCƒ}[‚ğì¬
+		// ãƒ“ãƒ¥ãƒ¼ã®å†æç”»ã‚¿ã‚¤ãƒãƒ¼
+		// ã‚¿ã‚¤ãƒãƒ¼ã‚’ä½œæˆ
 		Timer timer = new Timer(false);
-		// uINTERVAL_TIMEvƒ~ƒŠ•b‚¨‚«‚Éƒ^ƒXƒN(TimerTask)‚ğÀs
+		// ã€ŒINTERVAL_TIMEã€ã€€ãƒŸãƒªç§’ãŠãã«ã‚¿ã‚¹ã‚¯ï¼ˆTimerTaskï¼‰ã‚’å®Ÿè¡Œ
 	    timer.schedule(new TimerTask(){
 	    	public void run(){
 	    		handler.post(new Runnable(){
 	    			public void run(){
-	    				// ƒrƒ…[‚ğÄ•`‰æ
+	    				// ãƒ“ãƒ¥ãƒ¼ã‚’å†æç”»
 	    				view.invalidate();
 	    			}});
 	    	}

@@ -19,45 +19,45 @@ public class SampleView extends View {
 
 	private	Paint paint = new Paint();
 	private int		color = Color.RED;
-	private int		ballx = 500;     //‹Ê‚Ì‰ŠúˆÊ’u
+	private int		ballx = 500;     //ç‰ã®åˆæœŸä½ç½®
 	private int		bally = 500;     //
-	private	int 		dx = -2;   //‹Ê‚ÌŒü‚«‚ğ•\‚·
+	private	int 		dx = -2;   //ç‰ã®å‘ã
 	private	int 		dy = -2;   //
-	private static int margin = 20; //‹Ê‚Ì”¼Œa
-	private int blocrecord = 4; //ƒuƒƒbƒN‚Ìs
-	private int blocfield = 4;//ƒuƒƒbƒN‚Ì—ñ
-	private int map[][] = new int[blocrecord][blocfield]  ;    //ƒuƒƒbƒN‚É‘Î‚·‚é”z—ñ
-	private Bitmap item;          //‰æ‘œ item
-	private int speed = 15;       //‹Ê‚Ì‘¬‚³‚ğİ’è
-	private float ex = 0;         //ƒ^ƒbƒ`‚³‚ê‚½êŠ‚ÌÀ•W
+	private static int margin = 20; //ç‰ã®åŠå¾„
+	private int blocrecord = 4; //ãƒ–ãƒ­ãƒƒã‚¯ã®è¡Œ
+	private int blocfield = 4;//ãƒ–ãƒ­ãƒƒã‚¯ã®åˆ—
+	private int map[][] = new int[blocrecord][blocfield]  ;    //ãƒ–ãƒ­ãƒƒã‚¯ã®é…åˆ—
+	private Bitmap item;          //ç”»åƒã€€
+	private int speed = 15;       //ç‰ã®é€Ÿã•
+	private float ex = 0;         //ã‚¿ãƒƒãƒã•ã‚ŒãŸå ´æ‰€ã®åº§æ¨™
 	private float ey = 0;         //
-	private int bar = 100;       //ƒo[‚Ì•
-	private boolean start = false; // ƒQ[ƒ€‚ğn‚ß‚é‚Ì”»’è
-	private boolean restart = false; //@ƒŠƒXƒ^[ƒg
-	private boolean clear = false;
-	private int count = 0;      //ƒuƒƒbƒN‚Ì”
+	private int bar = 100;       //ãƒãƒ¼ã®å¹…
+	private boolean start = false; // ã‚²ãƒ¼ãƒ ã‚’å§‹ã‚ã‚‹æ™‚åˆ¤å®š
+	private boolean restart = false; //ã€€ãƒªã‚¹ã‚¿ãƒ¼ãƒˆã®åˆ¤å®š
+	private boolean clear = false;  //ã‚¯ãƒªã‚¢ãƒ¼ã®åˆ¤å®š
+	private int count = 0;      //ãƒ–ãƒ­ãƒƒã‚¯ã®æ•°
 
-	public SampleView(Context context) //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	public SampleView(Context context) //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	{
 		super(context);
 		setBackgroundColor(Color.WHITE);
 		Resources res = context.getResources();
-		item = BitmapFactory.decodeResource(res, R.drawable.ic_launcher); //ƒAƒ“ƒhƒƒCƒh‚ÌŠG
+		item = BitmapFactory.decodeResource(res, R.drawable.ic_launcher); //ã‚¢ãƒ³ãƒ‰ãƒ­ã‚¤ãƒ‰ã®çµµ
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) //ƒ^ƒbƒ`‚³‚ê‚½
+	public boolean onTouchEvent(MotionEvent event) //ã‚¿ãƒƒãƒã•ã‚ŒãŸæ™‚
 	{
 		ex = event.getX();    
 		ey = event.getY();
 		int	action = event.getAction();
-		if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //ˆê‰ñƒ^ƒbƒ`‚³‚ê‚½
+		if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //ï¼‘å›ã‚¿ãƒƒãƒã•ã‚ŒãŸæ™‚
 
 			start = true;
 			
 					}
 		if(restart == true){
-			if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //ˆê‰ñƒ^ƒbƒ`‚³‚ê‚½
+			if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //ï¼‘å›ã‚¿ãƒƒãƒã•ã‚ŒãŸæ™‚
 				for(int m = 0; m < blocrecord; m++){
 					for(int n =0; n < blocfield; n++){
 						map[m][n] = 0;
@@ -76,24 +76,23 @@ public class SampleView extends View {
 	}
 	
 	@Override
-	public void onDraw(Canvas canvas){   //•`‰æ‚ÉŠÖ‚·‚é
+	public void onDraw(Canvas canvas){   //æç”»ã«é–¢ã™ã‚‹
 		
-		paint.setColor(color); //F‚ğw’èH
+		paint.setColor(color); 
 		if(start == false){
 			paint.setTextSize(50);
         	paint.setColor(Color.BLUE);
-			canvas.drawText("‚Í‚¶‚ß‚Ä‚ÌƒuƒƒbƒN•ö‚µ‚Ã‚­‚è", getWidth()/10, 200, paint);
+			canvas.drawText("ã¯ã˜ã‚ã¦ã®ãƒ–ãƒ­ãƒƒã‚¯å´©ã—ã¥ãã‚Š", getWidth()/10, 200, paint);
 			paint.setColor(0xFF000000);
-			canvas.drawText("‰æ–Ê‚ğƒ^ƒbƒ`‚·‚é‚Æn‚Ü‚é‚æ", getWidth()/10, getHeight()-600, paint);
+			canvas.drawText("ç”»é¢ã‚’ã‚¿ãƒƒãƒã™ã‚‹ã¨å§‹ã¾ã‚‹ã‚ˆ", getWidth()/10, getHeight()-600, paint);
 			
 			
 			
 		}else if(start == true){
-		canvas.drawCircle(ballx, bally, margin, paint);//‹Ê‚ğ•\¦
+		canvas.drawCircle(ballx, bally, margin, paint);//ç‰ã®è¡¨ç¤º
 		
-		//canvas.drawColor(Color.WHITE);//”wŒi‚ÌF‚ğw’è
 		
-		//ƒuƒƒbƒN‚ğ•\¦‚·‚é
+		//ãƒ–ãƒ­ãƒƒã‚¯ã‚’è¡¨ç¤ºã™ã‚‹
 		for(int l = 0; l < blocrecord; l++){
 			for(int i = 0 ; i <  blocfield; i++){
 				if(map[l][i] == 0){	
@@ -103,10 +102,12 @@ public class SampleView extends View {
 					paint.setStyle(Style.STROKE);
 					paint.setColor(0xFF000000);
 				    canvas.drawRect(i*(getWidth()/blocfield),100+(60*l),(1+i)*(getWidth()/blocfield),160+(60*l),paint);
-		//ƒuƒƒbƒN‚Æ‹Ê‚ªÕ“Ë‚µ‚½‚Æ‚«
+		
+				    //ãƒ–ãƒ­ãƒƒã‚¯ã¨ç‰ãŒè¡çªã—ãŸã¨ã
+				    
 		for(int j = 0 ; j <= (getWidth()/blocfield); j++){
 			if ((ballx - ((i*(getWidth()/blocfield))+j))*(ballx - ((i*(getWidth()/blocfield))+j))
-				+(bally - (160+(60*l)))*(bally - (160+(60*l))) <= margin*margin) //ƒuƒƒbƒN‚Ì‰º‘¤‚©‚çÕ“Ë 
+				+(bally - (160+(60*l)))*(bally - (160+(60*l))) <= margin*margin) //ãƒ–ãƒ­ãƒƒã‚¯ã®ä¸‹å´ã‹ã‚‰è¡çª
 			{
 				dy = 2;
 				map[l][i] = 1;
@@ -115,7 +116,7 @@ public class SampleView extends View {
 		}
 		for(int j = 0 ; j <= (getWidth()/blocfield); j++){
 			if ((ballx - ((i*(getWidth()/blocfield))+j))*(ballx - ((i*(getWidth()/blocfield))+j))
-					+(bally - (100+(60*l)))*(bally - (100+(60*l))) <= margin*margin) //ƒuƒƒbƒNã‘¤‚©‚çÕ“Ë
+					+(bally - (100+(60*l)))*(bally - (100+(60*l))) <= margin*margin) //ãƒ–ãƒ­ãƒƒã‚¯ã®ä¸Šå´ã‹ã‚‰è¡çª
 			{
 				dy = -2;
 				map[l][i] = 1;
@@ -126,7 +127,7 @@ public class SampleView extends View {
 
 		for(int j = 0 ; j <= 60; j++){
 			if ((ballx - ((i+1)*(getWidth()/blocfield)))*(ballx - ((i+1)*(getWidth()/blocfield)))
-				+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) <= margin*margin)//ƒuƒƒbƒN‰E‘¤‚©‚çÕ“Ë
+				+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) <= margin*margin)//ãƒ–ãƒ­ãƒƒã‚¯ã®å³å´ã‹ã‚‰è¡çª
 			{
 				dx = 2;
 				map[l][i] = 1;
@@ -134,7 +135,7 @@ public class SampleView extends View {
 		}
 		for(int j = 0 ; j <= 60; j++){
 			if ((ballx - (i*(getWidth()/blocfield)))*(ballx - (i*(getWidth()/blocfield)))
-					+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) <= margin*margin)//ƒuƒƒbƒN¶‘¤‚©‚çÕ“Ë
+					+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) <= margin*margin)//ãƒ–ãƒ­ãƒƒã‚¯å·¦å´ã‹ã‚‰è¡çª
 			{
 				dx = -2;
 				map[l][i] = 1;
@@ -153,38 +154,38 @@ public class SampleView extends View {
 		}
 		count = 0;
 		
-        //   ƒo[‚ğ•\¦‚³‚¹‚é
+        //   ãƒãƒ¼ã‚’è¡¨ç¤ºã•ã›ã‚‹
 		paint.setColor(0xFFFF00FF);
 		paint.setStyle(Style.FILL);
 
 		canvas.drawRect(ex-bar,getHeight()-200,ex+bar,getHeight()-160, paint);
 
-		//ƒo[‚É“–‚½‚Á‚½‚Ìˆ—
+		//ã€€ãƒãƒ¼ã«å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
         for(int k = 0; k<=2*bar ; k++){
         	if ((ballx - (ex-bar+k))*(ballx - (ex-bar+k))
         			+(bally - (getHeight()-200))*(bally - (getHeight()-200)) <= margin*margin)
             	{ dy = -2;}
             }
-		/* ¶’[A‰E’[Aã’[A‰º’[‚É—ˆ‚½‚Æ‚«‚Ìˆ— */
-        /* ¶’[‚É—ˆ‚½‚ç”½“] */
+		/* å·¦ç«¯ã€€å³ç«¯ã€€ä¸Šç«¯ã€€ä¸‹ç«¯ã€€ã«æ¥ãŸæ™‚ã®å‡¦ç† */
+        /* å·¦ç«¯ã«æ¥ãŸã‚‰åè»¢ */
         if (ballx < 0 + margin ) {
             dx = 2;
         }
-        /* ‰E’[‚É—ˆ‚½‚ç”½“] */
+        /* å³ç«¯ã«æ¥ãŸã‚‰åè»¢ */
         if (ballx > getWidth() - margin) {
             dx = -2;
         }
-        /* ã’[‚É—ˆ‚½‚ç”½“] */
+        /* å³ç«¯ã«æ¥ãŸã‚‰åè»¢ */
         if (bally < 0 + margin) {
             dy = 2;
         }		
-        /* ‰º’[‚É—ˆ‚½‚ç */
+        /* ä¸‹ç«¯ã«æ¥ãŸæ™‚ã®å‡¦ç† */
         if (bally  > getHeight() - margin) {
         	paint.setTextSize(80);
         	paint.setColor(Color.BLUE);
         	canvas.drawText("Game Over",getWidth()/4,getHeight()/4,paint);
         	paint.setTextSize(50);
-        	canvas.drawText("ƒ^ƒbƒ`‚·‚é‚ÆƒXƒ^[ƒg‰æ–Ê‚É–ß‚é",getWidth()/4,(getHeight()/4)+200,paint);
+        	canvas.drawText("ã‚¿ãƒƒãƒã™ã‚‹ã¨ã‚¹ã‚¿ãƒ¼ãƒˆç”»é¢ã«æˆ»ã‚‹",getWidth()/4,(getHeight()/4)+200,paint);
         	ballx = -margin;
         	bally = +margin + getHeight();
         	speed = 0; 
@@ -195,7 +196,7 @@ public class SampleView extends View {
         if(clear == true){
         	paint.setTextSize(50);
         	canvas.drawText("Game Clear",getWidth()/4,getHeight()/4,paint);
-        	canvas.drawText("ƒ^ƒbƒ`‚·‚é‚ÆƒXƒ^[ƒg‰æ–Ê‚É–ß‚é",getWidth()/4,(getHeight()/4)+200,paint);
+        	canvas.drawText("ã‚¿ãƒƒãƒã™ã‚‹ã¨ã‚¹ã‚¿ãƒ¼ãƒˆç”»é¢ã«æˆ»ã‚‹",getWidth()/4,(getHeight()/4)+200,paint);
         	ballx = -margin;
         	bally = -margin;
         	speed = 0; 
