@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.text.method.Touch;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,12 +28,14 @@ public class SampleView extends View {
 	private int blocfield = 4;//ブロックの列
 	private int map[][] = new int[blocrecord][blocfield]  ;    //ブロックに対する配列
 	private Bitmap item;          //画像 item
-	private int speed = 10;       //玉の速さを設定
+	private int speed = 15;       //玉の速さを設定
 	private float ex = 0;         //タッチされた場所の座標
 	private float ey = 0;         //
 	private int bar = 100;       //バーの幅
 	private boolean start = false; // ゲームを始める時の判定
 	private boolean restart = false; //　リスタート
+	private boolean clear = false;
+	private int count = 0;      //ブロックの数
 
 	public SampleView(Context context) //コンストラクタ
 	{
@@ -55,19 +58,19 @@ public class SampleView extends View {
 					}
 		if(restart == true){
 			if((action & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){ //一回タッチされた時
+				for(int m = 0; m < blocrecord; m++){
+					for(int n =0; n < blocfield; n++){
+						map[m][n] = 0;
+					}
+				}
 				start = false;
+				clear = false;
 				restart = false;
 				ballx = 500;
 				bally = 500;
 				speed = 10;
 			}
-		}
-		
-		
-		
-			
-
-			
+		}		
 		
 		return true;
 	}
@@ -92,10 +95,14 @@ public class SampleView extends View {
 		
 		//ブロックを表示する
 		for(int l = 0; l < blocrecord; l++){
-		for(int i = 0 ; i <  blocfield; i++){
-			if(map[l][i] == 0){
-		
-		canvas.drawRect(i*(getWidth()/blocfield),100+(60*l),(1+i)*(getWidth()/blocfield),160+(60*l),paint);
+			for(int i = 0 ; i <  blocfield; i++){
+				if(map[l][i] == 0){	
+					paint.setStyle(Style.FILL);
+					paint.setColor(color);
+					canvas.drawRect(i*(getWidth()/blocfield),100+(60*l),(1+i)*(getWidth()/blocfield),160+(60*l),paint);
+					paint.setStyle(Style.STROKE);
+					paint.setColor(0xFF000000);
+				    canvas.drawRect(i*(getWidth()/blocfield),100+(60*l),(1+i)*(getWidth()/blocfield),160+(60*l),paint);
 		//ブロックと玉が衝突したとき
 		for(int j = 0 ; j <= (getWidth()/blocfield); j++){
 			if ((ballx - ((i*(getWidth()/blocfield))+j))*(ballx - ((i*(getWidth()/blocfield))+j))
@@ -104,6 +111,7 @@ public class SampleView extends View {
 				dy = 2;
 				map[l][i] = 1;
 			}
+			
 		}
 		for(int j = 0 ; j <= (getWidth()/blocfield); j++){
 			if ((ballx - ((i*(getWidth()/blocfield))+j))*(ballx - ((i*(getWidth()/blocfield))+j))
@@ -112,7 +120,9 @@ public class SampleView extends View {
 				dy = -2;
 				map[l][i] = 1;
 			}
-		}
+			
+			}
+		
 
 		for(int j = 0 ; j <= 60; j++){
 			if ((ballx - ((i+1)*(getWidth()/blocfield)))*(ballx - ((i+1)*(getWidth()/blocfield)))
@@ -129,14 +139,24 @@ public class SampleView extends View {
 				dx = -2;
 				map[l][i] = 1;
 			}
-		}
 		
-	}
 		}
+				}
+				count = count + map[l][i];
+				if(count == (blocfield * blocrecord)){
+					clear = true;
+				}
+					
+				
 		}
-	
-	
+			
+		}
+		count = 0;
+		
         //   バーを表示させる
+		paint.setColor(0xFFFF00FF);
+		paint.setStyle(Style.FILL);
+
 		canvas.drawRect(ex-bar,getHeight()-200,ex+bar,getHeight()-160, paint);
 
 		//バーに当たった時の処理
@@ -166,16 +186,31 @@ public class SampleView extends View {
         	paint.setTextSize(50);
         	canvas.drawText("タッチするとスタート画面に戻る",getWidth()/4,(getHeight()/4)+200,paint);
         	ballx = -margin;
-        	ballx = -margin;
         	bally = +margin + getHeight();
         	speed = 0; 
         	restart = true;
         	
-        }      
+        }
+        
+        if(clear == true){
+        	paint.setTextSize(50);
+        	canvas.drawText("Game Clear",getWidth()/4,getHeight()/4,paint);
+        	canvas.drawText("タッチするとスタート画面に戻る",getWidth()/4,(getHeight()/4)+200,paint);
+        	ballx = -margin;
+        	bally = -margin;
+        	speed = 0; 
+        	restart = true;
+        	
+        }
+        
+        
+        
         
         
         ballx = ballx + speed * dx;
         bally = bally + speed * dy;
 	}
+	
+	}
 }
-}
+
