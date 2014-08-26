@@ -4,9 +4,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
@@ -24,7 +28,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		view = new SampleView(this);
 		setContentView(view);
-
 		// ビューの再描画タイマー
 		// タイマーを作成
 		Timer timer = new Timer(false);
@@ -47,7 +50,6 @@ public class MainActivity extends Activity {
 //					.add(R.id.container, new PlaceholderFragment()).commit();
 //		}
 	}
-
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //
