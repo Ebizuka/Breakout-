@@ -33,12 +33,16 @@ public class SampleView extends View {
 	private int speed = 15;       //玉の速さ
 	private float ex = 0;         //タッチされた場所の座標
 	private float ey = 0;         //
+	private int         vx,vy; //バーとの衝突時、玉の向き変更
 	private int bar = 100;       //バーの幅
 	private boolean start = false; // ゲームを始める時判定
 	private boolean restart = false; //　リスタートの判定
 	private boolean clear = false;  //クリアーの判定
 	private boolean stage[] = new boolean[3]; // stageの種類
 	private int count = 0;      //ブロックの数
+	private int stock = 3; //　玉のstock数
+	private double angle = 45*(Math.PI/180.0) ; //角度
+	
 
 	SampleView(Context context) //コンストラクタ
 	{
@@ -65,6 +69,8 @@ public class SampleView extends View {
 				bally = getHeight()/2;
 				blocrecord = 5 + 2*z;
 				blocfield  = 5 + 2*z;
+//				vx = (int)((Math.cos(angle))*2-(Math.sin(angle))*2);
+//				vy = (int)((Math.sin(angle))*2+(Math.cos(angle))*2);
 				speed = 10 +(3*z);
 				start = true;
 				}
@@ -105,6 +111,8 @@ public class SampleView extends View {
 				z = e +5;
 				String Z = Integer.toString(z) ;
 				canvas.drawText(Z +"×" +Z, ((4*e)+1)*(getWidth()/12),(getHeight()/2), paint);
+		
+				
 			}
 			
 			
@@ -128,37 +136,33 @@ public class SampleView extends View {
 				    canvas.drawRect(i*(getWidth()/blocfield),100+(60*l),(1+i)*(getWidth()/blocfield),160+(60*l),paint);
 				  
 //		ブロックと玉が衝突したとき			    
-		for(int j = 0 ; j <= (getWidth()/blocfield); j++){
+		for(int j = 0 ; j < (getWidth()/blocfield); j++){
 			if ((ballx - ((i*(getWidth()/blocfield))+j))*(ballx - ((i*(getWidth()/blocfield))+j))
-				+(bally - (160+(60*l)))*(bally - (160+(60*l))) <= margin*margin) //ブロックの下側から衝突
+				+(bally - (160+(60*l)))*(bally - (160+(60*l))) < margin*margin) //ブロックの下側から衝突
 			{
 				dy = 2;
 				map[l][i] = 1;
 			}
-			
-		}
-		for(int j = 0 ; j <= (getWidth()/blocfield); j++){
+	
 			if ((ballx - ((i*(getWidth()/blocfield))+j))*(ballx - ((i*(getWidth()/blocfield))+j))
-					+(bally - (100+(60*l)))*(bally - (100+(60*l))) <= margin*margin) //ブロックの上側から衝突
+					+(bally - (100+(60*l)))*(bally - (100+(60*l))) < margin*margin) //ブロックの上側から衝突
 			{
 				dy = -2;
 				map[l][i] = 1;
 			}
 			
-			}
+		}
 		
 
-		for(int j = 0 ; j <= 60; j++){
+		for(int j = 0 ; j < 60; j++){
 			if ((ballx - ((i+1)*(getWidth()/blocfield)))*(ballx - ((i+1)*(getWidth()/blocfield)))
-				+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) <= margin*margin)//ブロックの右側から衝突
+				+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) < margin*margin)//ブロックの右側から衝突
 			{
 				dx = 2;
 				map[l][i] = 1;
 			}
-		}
-		for(int j = 0 ; j <= 60; j++){
 			if ((ballx - (i*(getWidth()/blocfield)))*(ballx - (i*(getWidth()/blocfield)))
-					+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) <= margin*margin)//ブロック左側から衝突
+					+(bally - (100+(60*l)+j))*(bally - (100+(60*l)+j)) < margin*margin)//ブロック左側から衝突
 			{
 				dx = -2;
 				map[l][i] = 1;
@@ -187,8 +191,12 @@ public class SampleView extends View {
 		//　バーに当たった時の処理
         for(int k = 0; k<=2*bar ; k++){
         	if ((ballx - (ex-bar+k))*(ballx - (ex-bar+k))
-        			+(bally - (getHeight()-200))*(bally - (getHeight()-200)) <= margin*margin)
-            	{ dy = -2;}
+        			+((bally) - (getHeight()-200))*((bally) - (getHeight()-200)) < margin*margin)
+            	{
+        			
+        			dy = -(int)(Math.random()*5);
+        			
+        		}
             }
 		/* 左端　右端　上端　下端　に来た時の処理 */
         /* 左端に来たら反転 */

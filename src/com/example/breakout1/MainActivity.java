@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	// ハンドラーを作成
 	private Handler handler = new Handler();
 	// ビューの描画感覚（ミリ秒　再描画）
-	private final static long INTERVAL_TIME = 30;
+	private final static long INTERVAL_TIME = 20;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
