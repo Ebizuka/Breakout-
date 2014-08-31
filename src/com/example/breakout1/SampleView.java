@@ -67,8 +67,8 @@ public class SampleView extends View {
 			if(z*(getWidth()/3)<=ex && ex <= (z+1)*(getWidth()/3) && (getHeight()/3) <= ey && ey <= 2*(getHeight()/3)){
 				ballx = getWidth()/2;
 				bally = getHeight()/2;
-				blocrecord = 5 + 2*z;
-				blocfield  = 5 + 2*z;
+				blocrecord = 5 + z;
+				blocfield  = 5 + z;
 //				vx = (int)((Math.cos(angle))*2-(Math.sin(angle))*2);
 //				vy = (int)((Math.sin(angle))*2+(Math.cos(angle))*2);
 				speed = 10 +(3*z);
